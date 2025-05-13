@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+<script src="js/realtime.js"></script>
+<script src="js/search.js"></script>
+<html lang="pt-BR">
+    
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Helpdesk TI - Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="logo">
+                <i class="fas fa-headset"></i>
+                <h1>Helpdesk TI</h1>
+            </div>
+            
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="email"><i class="fas fa-envelope"></i> E-mail</label>
+                    <input type="email" id="email" required placeholder="seu@email.com">
+                </div>
+                
+                <div class="input-group">
+                    <label for="senha"><i class="fas fa-lock"></i> Senha</label>
+                    <input type="password" id="senha" required placeholder="••••••••">
+                </div>
+                
+                <button type="submit" class="btn-primary">
+                    <i class="fas fa-sign-in-alt"></i> Entrar
+                </button>
+                
+                <div class="login-footer">
+                    <a href="#">Esqueci minha senha</a>
+                </div>
+            </form>
+        </div>
+        
+        <div class="login-bg">
+            <div class="bg-overlay"></div>
+            <div class="bg-content">
+                <h2>Sistema de Gerenciamento de Chamados</h2>
+                <p>Acompanhe e resolva solicitações de TI de forma eficiente</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+</body>
+</html>

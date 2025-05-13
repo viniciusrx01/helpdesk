@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+
+<script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+<script src="js/realtime.js"></script>
+<script src="js/search.js"></script>
+<html lang="pt-BR">
+    
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Helpdesk TI - Detalhes do Chamado</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar (mesmo código do dashboard.html) -->
+        <aside class="sidebar">
+            <!-- ... conteúdo igual ao dashboard ... -->
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="main-header">
+                <div class="header-left">
+                    <a href="chamados.html" class="btn-back">
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                    <h1>Detalhes do Chamado</h1>
+                </div>
+                <div class="header-actions">
+                    <button id="printTicket" class="btn-secondary">
+                        <i class="fas fa-print"></i> Imprimir
+                    </button>
+                    <button id="editTicket" class="btn-primary">
+                        <i class="fas fa-edit"></i> Editar
+                    </button>
+                </div>
+            </header>
+            
+            <div class="content-wrapper">
+                <div class="ticket-details">
+                    <!-- Cabeçalho do Chamado -->
+                    <div class="ticket-header">
+                        <div class="ticket-title">
+                            <h2 id="ticketTitle">Servidor principal offline</h2>
+                            <span class="ticket-id" id="ticketId">#TICKET-001</span>
+                        </div>
+                        <div class="ticket-meta">
+                            <div class="meta-item">
+                                <span class="meta-label">Status:</span>
+                                <span class="badge andamento" id="ticketStatus">Em Andamento</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Prioridade:</span>
+                                <span class="priority critical" id="ticketPriority">
+                                    <i class="fas fa-exclamation-circle"></i> Crítica
+                                </span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Aberto em:</span>
+                                <span id="ticketCreatedAt">10/06/2023 14:30</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Última atualização:</span>
+                                <span id="ticketUpdatedAt">10/06/2023 15:45</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Grid de Detalhes -->
+                    <div class="details-grid">
+                        <div class="details-main">
+                            <!-- Descrição -->
+                            <div class="details-section">
+                                <h3>Descrição</h3>
+                                <div class="section-content" id="ticketDescription">
+                                    <p>O servidor principal parou de responder às 14:25. Todos os serviços hospedados neste servidor estão offline, incluindo o ERP principal, sistema de e-mails e intranet.</p>
+                                    <p>Os usuários estão impossibilitados de trabalhar. Necessária intervenção urgente.</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Anexos -->
+                            <div class="details-section">
+                                <h3>Anexos</h3>
+                                <div class="section-content" id="ticketAttachments">
+                                    <div class="attachments-list">
+                                        <a href="#" class="attachment-item">
+                                            <i class="fas fa-file-image"></i>
+                                            <span>screenshot-erro.png</span>
+                                        </a>
+                                        <a href="#" class="attachment-item">
+                                            <i class="fas fa-file-alt"></i>
+                                            <span>log-servidor.txt</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Histórico -->
+                            <div class="details-section">
+                                <h3>Histórico de Atualizações</h3>
+                                <div class="section-content">
+                                    <div class="timeline" id="ticketHistory">
+                                        <!-- Itens serão adicionados via JavaScript -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="details-sidebar">
+                            <!-- Informações -->
+                            <div class="details-section">
+                                <h3>Informações</h3>
+                                <div class="section-content">
+                                    <div class="info-item">
+                                        <span class="info-label">Cliente:</span>
+                                        <span id="ticketClient">Financeiro</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label">Categoria:</span>
+                                        <span id="ticketCategory">Servidores</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label">Responsável:</span>
+                                        <span id="ticketAssignee">João Silva (TI)</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label">SLA:</span>
+                                        <span id="ticketSLA">4 horas (expira em 1h23min)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Ações Rápidas -->
+                            <div class="details-section">
+                                <h3>Ações</h3>
+                                <div class="section-content">
+                                    <div class="quick-actions">
+                                        <button id="changeStatusBtn" class="btn-action">
+                                            <i class="fas fa-sync-alt"></i> Alterar Status
+                                        </button>
+                                        <button id="assignToMeBtn" class="btn-action">
+                                            <i class="fas fa-user-check"></i> Assumir Chamado
+                                        </button>
+                                        <button id="addNoteBtn" class="btn-action">
+                                            <i class="fas fa-comment-medical"></i> Adicionar Nota
+                                        </button>
+                                        <button id="closeTicketBtn" class="btn-action success">
+                                            <i class="fas fa-check-circle"></i> Fechar Chamado
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Notas -->
+                            <div class="details-section">
+                                <h3>Adicionar Nota</h3>
+                                <div class="section-content">
+                                    <form id="noteForm">
+                                        <div class="form-group">
+                                            <textarea id="noteText" rows="4" placeholder="Digite sua nota aqui..."></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>
+                                                <input type="checkbox" id="notePrivate"> Nota privada (visível apenas para a equipe de TI)
+                                            </label>
+                                        </div>
+                                        <button type="submit" class="btn-primary btn-block">
+                                            <i class="fas fa-plus"></i> Adicionar Nota
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal de Status -->
+    <div id="statusModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Alterar Status do Chamado</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="statusForm">
+                    <div class="form-group">
+                        <label for="newStatus">Novo Status</label>
+                        <select id="newStatus" required>
+                            <option value="">Selecione um status</option>
+                            <option value="aberto">Aberto</option>
+                            <option value="andamento">Em Andamento</option>
+                            <option value="aguardando">Aguardando Cliente</option>
+                            <option value="resolvido">Resolvido</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="statusNote">Observação</label>
+                        <textarea id="statusNote" rows="3" placeholder="Adicione uma observação sobre a mudança de status"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="cancelStatus" class="btn-secondary">Cancelar</button>
+                <button id="saveStatus" class="btn-primary">Salvar Alterações</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/detalhes.js"></script>
+</body>
+</html>

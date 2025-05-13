@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Helpdesk TI - Configurações</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-headset"></i>
+                <h2>Helpdesk TI</h2>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="dashboard.html">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="chamados.html">
+                            <i class="fas fa-ticket-alt"></i>
+                            <span>Chamados</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="novo-chamado.html">
+                            <i class="fas fa-plus-circle"></i>
+                            <span>Novo Chamado</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="relatorios.html">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Relatórios</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="configuracao.html">
+                            <i class="fas fa-cog"></i>
+                            <span>Configurações</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="user-details">
+                        <span class="user-name" id="userName">Administrador</span>
+                        <span class="user-email" id="userEmail">admin@admin.com</span>
+                    </div>
+                </div>
+                <a href="#" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Sair</span>
+                </a>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="main-header">
+                <h1>Configurações</h1>
+                <div class="header-actions">
+                    <button id="saveSettings" class="btn-primary">
+                        <i class="fas fa-save"></i> Salvar Configurações
+                    </button>
+                </div>
+            </header>
+            
+            <div class="content-wrapper">
+                <div class="settings-tabs">
+                    <div class="tabs-header">
+                        <button class="tab-btn active" data-tab="general">Geral</button>
+                        <button class="tab-btn" data-tab="users">Usuários</button>
+                        <button class="tab-btn" data-tab="sla">SLA</button>
+                        <button class="tab-btn" data-tab="categories">Categorias</button>
+                    </div>
+                    
+                    <div class="tabs-content">
+                        <!-- Aba Geral -->
+                        <div id="general" class="tab-pane active">
+                            <form id="generalSettings">
+                                <div class="form-group">
+                                    <label for="systemName">Nome do Sistema</label>
+                                    <input type="text" id="systemName" value="Helpdesk TI">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="timezone">Fuso Horário</label>
+                                    <select id="timezone">
+                                        <option value="-03:00">Brasília (UTC -3)</option>
+                                        <option value="-04:00">Manaus (UTC -4)</option>
+                                        <option value="-05:00">Rio Branco (UTC -5)</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="logoUpload">Logo do Sistema</label>
+                                    <input type="file" id="logoUpload" accept="image/*">
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <!-- Aba Usuários -->
+                        <div id="users" class="tab-pane">
+                            <div class="table-actions">
+                                <button id="addUser" class="btn-primary">
+                                    <i class="fas fa-plus"></i> Adicionar Usuário
+                                </button>
+                            </div>
+                            
+                            <table id="usersTable" class="display">
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Email</th>
+                                        <th>Departamento</th>
+                                        <th>Função</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Administrador</td>
+                                        <td>admin@admin.com</td>
+                                        <td>TI</td>
+                                        <td><span class="badge admin">Admin</span></td>
+                                        <td>
+                                            <button class="btn-icon edit"><i class="fas fa-edit"></i></button>
+                                            <button class="btn-icon delete"><i class="fas fa-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Aba SLA -->
+                        <div id="sla" class="tab-pane">
+                            <form id="slaSettings">
+                                <div class="sla-grid">
+                                    <div class="sla-header">Categoria</div>
+                                    <div class="sla-header">Baixa</div>
+                                    <div class="sla-header">Média</div>
+                                    <div class="sla-header">Alta</div>
+                                    <div class="sla-header">Crítica</div>
+                                    
+                                    <!-- Linhas serão geradas dinamicamente -->
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <!-- Aba Categorias -->
+                        <div id="categories" class="tab-pane">
+                            <form id="categoriesForm">
+                                <div class="form-group">
+                                    <label>Categorias Existentes</label>
+                                    <div class="categories-list" id="categoriesList">
+                                        <!-- Categorias serão carregadas aqui -->
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="newCategory">Nova Categoria</label>
+                                    <div class="input-group">
+                                        <input type="text" id="newCategory" placeholder="Nome da categoria">
+                                        <button type="button" id="addCategory" class="btn-primary">
+                                            <i class="fas fa-plus"></i> Adicionar
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal de Usuário -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="userModalTitle">Adicionar Usuário</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="userForm">
+                    <input type="hidden" id="userId">
+                    <div class="form-group">
+                        <label for="userName">Nome</label>
+                        <input type="text" id="userName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="userEmail">Email</label>
+                        <input type="email" id="userEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="userDepartment">Departamento</label>
+                        <input type="text" id="userDepartment" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="userRole">Função</label>
+                        <select id="userRole" required>
+                            <option value="user">Usuário</option>
+                            <option value="technician">Técnico</option>
+                            <option value="admin">Administrador</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="passwordGroup">
+                        <label for="userPassword">Senha</label>
+                        <input type="password" id="userPassword">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="cancelUser" class="btn-secondary">Cancelar</button>
+                <button id="saveUser" class="btn-primary">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="js/auth-temp.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/configuracao.js"></script>
+</body>
+</html>

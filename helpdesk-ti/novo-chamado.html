@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+
+<script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+<script src="js/realtime.js"></script>
+<script src="js/search.js"></script>
+<html lang="pt-BR">
+    
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Helpdesk TI - Novo Chamado</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar (mesmo código do dashboard.html) -->
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-headset"></i>
+                <h2>Helpdesk TI</h2>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="dashboard.html">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="chamados.html">
+                            <i class="fas fa-ticket-alt"></i>
+                            <span>Chamados</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="novo-chamado.html">
+                            <i class="fas fa-plus-circle"></i>
+                            <span>Novo Chamado</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="relatorios.html">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Relatórios</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="configuracao.html">
+                            <i class="fas fa-cog"></i>
+                            <span>Configurações</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="user-details">
+                        <span class="user-name">Usuário Logado</span>
+                        <span class="user-email" id="userEmail"></span>
+                    </div>
+                </div>
+                <a href="#" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Sair</span>
+                </a>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="main-header">
+                <h1>Novo Chamado</h1>
+                <div class="header-actions">
+                    <a href="chamados.html" class="btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Voltar
+                    </a>
+                </div>
+            </header>
+            
+            <div class="content-wrapper">
+                <form id="ticketForm" class="ticket-form">
+                    <div class="form-grid">
+                        <div class="form-section">
+                            <h3>Informações Básicas</h3>
+                            
+                            <div class="form-group">
+                                <label for="ticketTitle">Título do Chamado *</label>
+                                <input type="text" id="ticketTitle" required placeholder="Descreva brevemente o problema">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="ticketDescription">Descrição Detalhada *</label>
+                                <textarea id="ticketDescription" rows="5" required placeholder="Descreva com detalhes o problema encontrado, incluindo mensagens de erro se aplicável"></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="ticketCategory">Categoria *</label>
+                                <select id="ticketCategory" required>
+                                    <option value="">Selecione uma categoria</option>
+                                    <option value="hardware">Hardware</option>
+                                    <option value="software">Software</option>
+                                    <option value="rede">Rede/Internet</option>
+                                    <option value="email">E-mail</option>
+                                    <option value="acesso">Acesso/Senha</option>
+                                    <option value="outro">Outro</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-section">
+                            <h3>Detalhes Adicionais</h3>
+                            
+                            <div class="form-group">
+                                <label for="ticketPriority">Prioridade *</label>
+                                <select id="ticketPriority" required>
+                                    <option value="">Selecione a prioridade</option>
+                                    <option value="baixa">Baixa</option>
+                                    <option value="media">Média</option>
+                                    <option value="alta">Alta</option>
+                                    <option value="critica">Crítica</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="ticketClient">Cliente/Departamento *</label>
+                                <select id="ticketClient" required>
+                                    <option value="">Selecione o cliente</option>
+                                    <option value="financeiro">Financeiro</option>
+                                    <option value="rh">Recursos Humanos</option>
+                                    <option value="vendas">Vendas</option>
+                                    <option value="ti">TI</option>
+                                    <option value="marketing">Marketing</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="ticketAttachments">Anexos</label>
+                                <div class="file-upload">
+                                    <input type="file" id="ticketAttachments" multiple>
+                                    <label for="ticketAttachments" class="upload-label">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                        <span>Arraste arquivos ou clique para selecionar</span>
+                                    </label>
+                                    <div class="file-preview" id="filePreview"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" id="cancelBtn" class="btn-secondary">
+                            <i class="fas fa-times"></i> Cancelar
+                        </button>
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-save"></i> Salvar Chamado
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/novo-chamado.js"></script>
+</body>
+</html>

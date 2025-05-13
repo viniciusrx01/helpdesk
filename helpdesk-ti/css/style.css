@@ -1,0 +1,158 @@
+:root {
+    --primary: #4361ee;
+    --primary-dark: #3a56d4;
+    --secondary: #3f37c9;
+    --success: #4cc9f0;
+    --danger: #f72585;
+    --warning: #f8961e;
+    --info: #4895ef;
+    --light: #f8f9fa;
+    --dark: #212529;
+    --gray: #6c757d;
+    --gray-light: #e9ecef;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f5f7fa;
+    color: var(--dark);
+    line-height: 1.6;
+}
+
+/* Estilos do Login */
+.login-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 450px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.logo i {
+    font-size: 3rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.logo h1 {
+    font-size: 1.8rem;
+    color: var(--dark);
+}
+
+.input-group {
+    margin-bottom: 1.5rem;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--gray);
+    font-weight: 500;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--gray-light);
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border 0.3s;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+}
+
+.login-footer {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.login-footer a {
+    color: var(--gray);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.login-footer a:hover {
+    color: var(--primary);
+}
+
+.login-bg {
+    flex: 1;
+    background: url('../assets/login-bg.jpg') center/cover no-repeat;
+    position: relative;
+    display: none;
+}
+
+.bg-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.bg-content {
+    position: absolute;
+    bottom: 5rem;
+    left: 5rem;
+    color: white;
+    max-width: 600px;
+}
+
+.bg-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.bg-content p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+/* Responsividade */
+@media (min-width: 992px) {
+    .login-bg {
+        display: block;
+    }
+}
